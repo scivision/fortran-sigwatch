@@ -105,14 +105,16 @@ int WATCHSIGNALNAME_F(char *signame, int *response, int signame_length)
 
     initresponses();
 
-    if (SIGNAMEIS("HUP", 3))
-        signum = SIGHUP;
-    else if (SIGNAMEIS("INT", 3))
+    if (SIGNAMEIS("INT", 3))
         signum = SIGINT;
+#ifndef _WIN32
+    else if (SIGNAMEIS("HUP", 3))
+        signum = SIGHUP;
     else if (SIGNAMEIS("USR1", 4))
         signum = SIGUSR1;
     else if (SIGNAMEIS("USR2", 4))
         signum = SIGUSR2;
+#endif
     else
         signum = -1;
 
