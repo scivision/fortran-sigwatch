@@ -2,7 +2,7 @@
 
 Originally by Norman Gray, modified by Michael Hirsch.
 
-`sigwatch`` is a library of routines to provide simple signal watching for Fortran programs. This allows a minimal level of control of a running program from outside it, for example to tell it to checkpoint itself on receipt of a signal.
+`sigwatch` is a library of routines to provide simple signal watching for Fortran programs. This allows a minimal level of control of a running program from outside it, for example to tell it to checkpoint itself on receipt of a signal.
 
 Version 1.0, 2011 February 2.
 Version 1.1, 2021 August
@@ -55,47 +55,13 @@ The function getlastsignal returns the response associated with the last signal 
 
 ## Example
 
-The following Fortran program shows the library in use.
-
-```fortran
-program sigs
-
-implicit none
-
-integer i
-integer status
-
-integer watchsignal
-integer watchsignalname
-integer getlastsignal
+```sh
+cmake -B build
+cmake --build build
 ```
-
-Watch for signal 10 (which is USR1 on this platform):
-
-```fortran
-status = watchsignal(10)
-write(*,'("watchsignal 10:",i2)') status
-```
-
-Watch for HUP, too:
-
-```fortran
-status = watchsignalname("HUP", 99)
-write(*,'("watchsignal HUP:",i2)') status
-
-do i=1,10
-    call sleep(1)
-    write (*,'("lastsig=", i2)') getlastsignal()
-enddo
-
-end
-```
-
-Then you can use the library like this:
 
 ```sh
-% gfortran -o libsigwatch-demo -lsigwatch libsigwatch-demo.f
-% ./libsigwatch-demo & # start in the background ($! now has the PID)
+% build/demo & # start in the background ($! now has the PID)
 [1] 15131
 watchsignal 10: 0
 watchsignal HUP: 0

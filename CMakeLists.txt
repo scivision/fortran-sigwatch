@@ -26,3 +26,8 @@ foreach(d HAVE_SIGNAL_H HAVE_NSIG HAVE__NSIG)
     target_compile_definitions(sigwatch PRIVATE ${d})
   endif()
 endforeach()
+
+# Example
+
+add_executable(demo example.f90)
+target_link_libraries(demo PRIVATE sigwatch)
