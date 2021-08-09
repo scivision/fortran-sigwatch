@@ -35,17 +35,17 @@ For more details about signals, see the man pages for signal(3) or signal(7), de
 
 A program prepares to receive signals by calling one of the watchsignalname or watchsignal functions, and calls getlastsignal at any point to retrieve the last signal which was sent to the process.
 
-The arguments to watchsignalname are signame, a character string containing the name of the signal to watch for, and response, an integer which will be returned by getlastsignal after the specified signal has been caught. The signal names which the function recognises are those most likely to be useful, namely HUP, INT, USR1 and USR2.
+The arguments to watchsignalname are signame, a character string containing the name of the signal to watch for, and response, an integer which will be returned by getlastsignal after the specified signal has been caught. The signal names which the function recognizes are those most likely to be useful, namely HUP, INT, USR1 and USR2.
 
 The integer response is the number which will subsequently be returned by getlastsignal, after this signal is caught. If this response is passed as -1, the signal number associated with this name is what will be returned. Note that, although both HUP and INT have generally fixed numbers, the numbers associated with signals USR1 and USR2 are different on different unix variants.
 
-If you need to catch another signal for some reason (make sure you understand the default behavour of the given signal first, however) you can give that signal as a number to the watchsignal function, and when that signal is later caught, the corresponding number is what will be returned by getlastsignal.
+If you need to catch another signal for some reason (make sure you understand the default behavior of the given signal first, however) you can give that signal as a number to the watchsignal function, and when that signal is later caught, the corresponding number is what will be returned by getlastsignal.
 
 The getlastsignal function returns the response associated with the last signal which was caught, or zero if no signal has been caught so far, or since the last call to getlastsignal. That is, any caught signal is returned only once.
 
 The installed signal handler does not re-throw the signal after it has caught it; this would defeat the purpose of this library for those signals, such as HUP and INT, for which the default action is to kill the process. Also, there is no way to tell if the signal was received by being re-thrown by another handler, installed after this one. If all of this matters to you, then this library cannot reasonably help you, and you have no hope but to learn to love the sigaction(2) manpage.
 
-When installing the handler, these functions replace any previous signal handler. If that was a non-default one (for example, one put there by an MPI environment) this could potentially change the behaviour of your program in an unhelpful fashion. To warn you of this, these functions return +1 in this case; this is a success return value, but also a warning that you should understand what that previous signal handler was doing there.
+When installing the handler, these functions replace any previous signal handler. If that was a non-default one (for example, one put there by an MPI environment) this could potentially change the behavior of your program in an unhelpful fashion. To warn you of this, these functions return +1 in this case; this is a success return value, but also a warning that you should understand what that previous signal handler was doing there.
 
 The sigwatchversion function returns the version number of the library, as an integer formed from the version number by major_version * 1000 + minor_version, So that the version number 1.2, for example, would be returned as integer 1002.
 
