@@ -4,6 +4,8 @@ project(FortranSignalWatch
 LANGUAGES C Fortran
 VERSION 1.1.0)
 
+include(CTest)
+
 include(CheckIncludeFile)
 include(CheckSymbolExists)
 
@@ -35,3 +37,10 @@ else()
   add_executable(demo example_unix.f90)
 endif()
 target_link_libraries(demo PRIVATE sigwatch)
+
+if(UNIX)
+  add_test(NAME ForkInterrupt COMMAND sh -c "$<TARGET_FILE:demo> & kill -HUP $!")
+  set_tests_properties(ForkInterrupt PROPERTIES
+    TIMEOUT 20
+    PASS_REGULAR_EXPRESSION "lastsig=99")
+endif()
