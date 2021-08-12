@@ -23,3 +23,16 @@ jobs:
     - run: cmake --preset default
     - run: cmake --build --preset default
     - run: ctest --preset default -V
+
+  macos:
+    needs: linux
+    runs-on: macos-latest
+    env:
+      FC: gfortran-11
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: cmake --preset default
+    - run: cmake --build --preset default
+    - run: ctest --preset default

@@ -11,6 +11,7 @@
 },
 {
   "name": "multi", "inherits": "default",
+  "displayName": "Ninja Multi configuration",
   "generator": "Ninja Multi-Config"
 },
 {
