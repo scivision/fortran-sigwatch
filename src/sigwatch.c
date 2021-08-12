@@ -35,24 +35,12 @@ static int lastsignal;
 #define NSIGS 32
 #endif
 
-#ifndef F77_FUNC
-/* configure.ac AC_F77_WRAPPERS was supposed to configure this, but
- * clearly didn't.  Use a common default.
- */
-#define F77_FUNC(lcname,ucname) lcname ## _
-#endif
-
-#define WATCHSIGNAL_F     F77_FUNC(watchsignal,WATCHSIGNAL)
-#define WATCHSIGNALNAME_F F77_FUNC(watchsignalname,WATCHSIGNALNAME)
-#define GETLASTSIGNAL_F   F77_FUNC(getlastsignal,GETLASTSIGNAL)
-#define SIGWATCHVERSION_F F77_FUNC(sigwatchversion,SIGWATCHVESION)
-
 static int signalresponses[NSIGS] = { -1 }; /* not-initialised flag */
 
 
-int WATCHSIGNAL_F    (int *signum);
-int WATCHSIGNALNAME_F(char *signame, int *response, int len);
-int GETLASTSIGNAL_F  (void);
+int watchsignal    (int *signum);
+int watchsignalname(char *signame, int *response);
+int getlastsignal  (void);
 
 static void detectsignal(int signum);
 static void initresponses(void);
@@ -62,7 +50,7 @@ typedef void (*sighandler_t)(int);
 /*
  * Watch for the given signal.
  */
-int WATCHSIGNAL_F(int *signump)
+int watchsignal(int *signump)
 {
     sighandler_t previous;
     int signum = *signump;
@@ -94,25 +82,22 @@ int WATCHSIGNAL_F(int *signump)
  * The set of `named' signals is HUP, INT, USR1 and USR2.  For other
  * signals, use the numeric function, watchsignal().
  */
-int WATCHSIGNALNAME_F(char *signame, int *response, int signame_length)
+int watchsignalname(char *signame, int *response)
 {
     int signum;
     sighandler_t previous;
     int rval;
 
-#define SIGNAMEIS(str,n) signame_length >= (n) && \
-    strncmp(signame, str, (n)) == 0
-
     initresponses();
 
-    if (SIGNAMEIS("INT", 3))
+    if (strncmp("INT", signame, 3) == 0)
         signum = SIGINT;
 #ifndef _WIN32
-    else if (SIGNAMEIS("HUP", 3))
+    else if (strncmp("HUP", signame, 3) == 0)
         signum = SIGHUP;
-    else if (SIGNAMEIS("USR1", 4))
+    else if (strncmp("USR1", signame, 4) == 0)
         signum = SIGUSR1;
-    else if (SIGNAMEIS("USR2", 4))
+    else if (strncmp("USR2", signame, 4) == 0)
         signum = SIGUSR2;
 #endif
     else
@@ -146,7 +131,7 @@ int WATCHSIGNALNAME_F(char *signame, int *response, int signame_length)
 /* Return the response associated with the last signal, as registered
  * with watchsignal() or watchsignalname()
  */
-int GETLASTSIGNAL_F(void)
+int getlastsignal(void)
 {
     int lastsig = lastsignal;
     lastsignal = 0;
@@ -157,7 +142,7 @@ int GETLASTSIGNAL_F(void)
         return lastsig;
 }
 
-int SIGWATCHVERSION_F(void)
+int sigwatchversion(void)
 {
     char *verstring = PACKAGE_VERSION;	/* format "major.minor" */
     char *endp;

@@ -1,0 +1,6 @@
+if(WIN32)
+  add_executable(demo example_windows.f90)
+else()
+  add_executable(demo example_unix.f90)
+endif()
+target_link_libraries(demo PRIVATE sigwatch)

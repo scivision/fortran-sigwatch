@@ -1,13 +1,22 @@
 program sigs
 
+use, intrinsic :: iso_c_binding, only: C_INT
+
 implicit none (type, external)
 
-integer i
-integer status
+integer :: i, status
 
-integer watchsignal
-integer watchsignalname
-integer getlastsignal
+interface
+integer(C_INT) function watchsignal(sig) bind(C)
+import C_INT
+integer(C_INT), intent(in) :: sig
+end function watchsignal
+
+integer(C_INT) function getlastsignal() bind(C)
+import C_INT
+end function getlastsignal
+
+end interface
 
 !! you can do ^C once to get a signal. The second time stops the program.
 status = watchsignal(2)

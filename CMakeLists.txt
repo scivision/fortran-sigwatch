@@ -28,7 +28,7 @@ if(HAVE_SIGNAL_H)
   endif()
 endif()
 
-add_library(sigwatch sigwatch.c)
+add_library(sigwatch src/sigwatch.c)
 target_compile_definitions(sigwatch PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}")
 
 foreach(d HAVE_SIGNAL_H HAVE_NSIG HAVE__NSIG)
@@ -37,18 +37,8 @@ foreach(d HAVE_SIGNAL_H HAVE_NSIG HAVE__NSIG)
   endif()
 endforeach()
 
-# Example
+add_subdirectory(examples)
 
-if(WIN32)
-  add_executable(demo example_windows.f90)
-else()
-  add_executable(demo example_unix.f90)
+if(BUILD_TESTING)
+  add_subdirectory(src/tests)
 endif()
-target_link_libraries(demo PRIVATE sigwatch)
-
-# if(UNIX)
-#   add_test(NAME ForkInterrupt COMMAND sh -c "$<TARGET_FILE:demo> & kill -HUP $!")
-#   set_tests_properties(ForkInterrupt PROPERTIES
-#     TIMEOUT 20
-#     PASS_REGULAR_EXPRESSION "lastsig=99")
-# endif()
