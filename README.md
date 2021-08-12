@@ -1,5 +1,8 @@
 # Fortran signal watching
 
+[![ci_cmake](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci_cmake.yml/badge.svg)](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci_cmake.yml)
+[![intel-oneapi](https://github.com/scivision/fortran-sigwatch/actions/workflows/intel-oneapi.yml/badge.svg)](https://github.com/scivision/fortran-sigwatch/actions/workflows/intel-oneapi.yml)
+
 Originally by Norman Gray, modified by Michael Hirsch.
 
 `sigwatch` is a library of routines to provide simple signal watching for Fortran programs. This allows a minimal level of control of a running program from outside it, for example to tell it to checkpoint itself on receipt of a signal.
