@@ -11,6 +11,14 @@ include(CheckSymbolExists)
 
 set(CMAKE_C_STANDARD 99)
 
+if(CMAKE_C_COMPILER_ID MATCHES "(GNU|Clang)")
+  string(APPEND CMAKE_C_FLAGS " -Wall -Wextra")
+endif()
+
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+  string(APPEND CMAKE_Fortran_FLAGS " -Wall -Wextra -fimplicit-none")
+endif()
+
 check_include_file("signal.h" HAVE_SIGNAL_H)
 
 if(HAVE_SIGNAL_H)
