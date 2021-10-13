@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19...3.21)
+cmake_minimum_required(VERSION 3.19...3.22)
 
 project(FortranSignalWatch
 LANGUAGES C Fortran
@@ -14,6 +14,9 @@ set(CMAKE_C_STANDARD 99)
 add_compile_options(
 "$<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wall;-Wextra>"
 "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wall;-Wextra;-fimplicit-none>"
+"$<$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>:-warn>"
+"$<$<COMPILE_LANG_AND_ID:C,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
+"$<$<COMPILE_LANG_AND_ID:CXX,Intel,IntelLLVM>:$<IF:$<BOOL:${WIN32}>,/W3,-w2>>"
 )
 
 check_include_file("signal.h" HAVE_SIGNAL_H)

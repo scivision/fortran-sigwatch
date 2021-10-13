@@ -1,8 +1,12 @@
 name: intel-oneapi
 
+
 env:
   CTEST_PARALLEL_LEVEL: 2
   CMAKE_BUILD_TYPE: Release
+  CC: icx
+  CXX: icpx
+  FC: ifx
 
 on:
   push:
@@ -42,11 +46,6 @@ jobs:
         printenv >> $GITHUB_ENV
 
     - name: Configure multi
-      env:
-        CC: icx
-        CXX: icpx
-        FC: ifort
-        MPI_ROOT: ${{ env.I_MPI_ROOT }}
       run: cmake --preset multi
 
     - name: print config log
