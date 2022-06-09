@@ -28,7 +28,7 @@ if(HAVE_SIGNAL_H)
   endif()
 endif()
 
-add_library(sigwatch src/sigwatch.c)
+add_library(sigwatch src/sigwatch.c src/sleep.c)
 target_compile_definitions(sigwatch PRIVATE
 PACKAGE_VERSION="${PROJECT_VERSION}"
 $<$<BOOL:${HAVE_SIGNAL_H}>:HAVE_SIGNAL_H>
