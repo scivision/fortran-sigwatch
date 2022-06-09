@@ -29,16 +29,16 @@ if(HAVE_SIGNAL_H)
 endif()
 
 add_library(sigwatch src/sigwatch.c)
-target_compile_definitions(sigwatch PRIVATE PACKAGE_VERSION="${PROJECT_VERSION}")
+target_compile_definitions(sigwatch PRIVATE
+PACKAGE_VERSION="${PROJECT_VERSION}"
+$<$<BOOL:${HAVE_SIGNAL_H}>:HAVE_SIGNAL_H>
+$<$<BOOL:${HAVE_NSIG}>:HAVE_NSIG>
+$<$<BOOL:${HAVE__NSIG}>:HAVE__NSIG>
+)
 
-foreach(d HAVE_SIGNAL_H HAVE_NSIG HAVE__NSIG)
-  if(${d})
-    target_compile_definitions(sigwatch PRIVATE ${d})
-  endif()
-endforeach()
 
-add_subdirectory(examples)
+add_subdirectory(example)
 
 if(BUILD_TESTING)
-  add_subdirectory(src/tests)
+  add_subdirectory(test)
 endif()
