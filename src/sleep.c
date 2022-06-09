@@ -2,6 +2,8 @@ extern void c_sleep(int);
 
 #ifdef _MSC_VER
 
+#include <windows.h>
+
 // https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
 void c_sleep(int milliseconds){
   Sleep(milliseconds);
