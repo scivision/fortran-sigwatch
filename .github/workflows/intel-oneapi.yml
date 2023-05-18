@@ -3,7 +3,6 @@ name: intel-oneapi
 
 env:
   CTEST_PARALLEL_LEVEL: 2
-  CMAKE_BUILD_TYPE: Release
   CC: icx
   CXX: icpx
   FC: ifx
@@ -13,6 +12,7 @@ on:
     paths:
       - "**.f90"
       - "**.F90"
+      - "*.c"
       - "**.cmake"
       - "**/CMakeLists.txt"
       - ".github/workflows/intel-oneapi.yml"
@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Intel Apt repository
       timeout-minutes: 1
@@ -45,22 +45,5 @@ jobs:
         source /opt/intel/oneapi/setvars.sh
         printenv >> $GITHUB_ENV
 
-    - name: Configure multi
-      run: cmake --preset multi
-
-    - name: print config log
-      if: ${{ failure() }}
-      run: cat build/CMakeFiles/CMakeError.log
-
-    - name: Debug build
-      run: cmake --build --preset debug
-
-    - name: Debug test
-      run: ctest --preset debug -V --output-junit test-debug-oneapi.xml
-
-
-    - name: Release build
-      run: cmake --build --preset release
-
-    - name: Release unit test
-      run: ctest --preset release -V --output-junit test-release-oneapi.xml
+    - name: Configure
+      run: cmake --workflow --preset default

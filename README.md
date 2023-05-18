@@ -1,6 +1,6 @@
 # Fortran signal watching
 
-[![ci_cmake](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci_cmake.yml/badge.svg)](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci_cmake.yml)
+[![ci_cmake](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci.yml/badge.svg)](https://github.com/scivision/fortran-sigwatch/actions/workflows/ci.yml)
 [![intel-oneapi](https://github.com/scivision/fortran-sigwatch/actions/workflows/intel-oneapi.yml/badge.svg)](https://github.com/scivision/fortran-sigwatch/actions/workflows/intel-oneapi.yml)
 
 Originally by Norman Gray, modified by Michael Hirsch.

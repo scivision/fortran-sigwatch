@@ -1,0 +1,29 @@
+name: ci_cmake
+
+env:
+  CTEST_PARALLEL_LEVEL: 2
+
+on:
+  push:
+    paths:
+      - "**.f90"
+      - "**.F90"
+      - "**.cmake"
+      - "**/CMakeLists.txt"
+      - ".github/workflows/ci.yml"
+
+jobs:
+
+  core:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - run: cmake --workflow --preset default
+      env:
+        FC: gfortran-12
