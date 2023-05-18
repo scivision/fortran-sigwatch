@@ -16,7 +16,7 @@ integer(C_INT) function getlastsignal() bind(C)
 import C_INT
 end function
 
-subroutine sleep(millseconds) bind(C, name="c_sleep")
+subroutine milli_sleep(millseconds) bind(C, name="c_sleep")
 import C_INT
 integer(C_INT), intent(in) :: millseconds
 end subroutine
@@ -29,7 +29,7 @@ print '("watchsignal 10:",i2)', status
 
 
 do i=1,10
-  call sleep(500)
+  call milli_sleep(500)
   print '("lastsig=", i2)', getlastsignal()
 enddo
 
