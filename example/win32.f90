@@ -9,7 +9,7 @@ integer :: i, status
 interface
 integer(C_INT) function watchsignal(sig) bind(C)
 import C_INT
-integer(C_INT), intent(in) :: sig
+integer(C_INT), intent(in), value :: sig
 end function
 
 integer(C_INT) function getlastsignal() bind(C)
@@ -18,14 +18,14 @@ end function
 
 subroutine milli_sleep(millseconds) bind(C, name="c_sleep")
 import C_INT
-integer(C_INT), intent(in) :: millseconds
+integer(C_INT), intent(in), value :: millseconds
 end subroutine
 
 end interface
 
-!! you can do ^C once to get a signal. The second time stops the program.
+!! do ^C once to get a signal. The second time stops the program.
 status = watchsignal(2)
-print '("watchsignal 10:",i2)', status
+print '("watchsignal 2:",i2)', status
 
 
 do i=1,10
@@ -33,6 +33,6 @@ do i=1,10
   print '("lastsig=", i2)', getlastsignal()
 enddo
 
-print *, "Fortran: stopped watching for signals"
+print '(a)', "Fortran: stopped watching for signals"
 
 end program

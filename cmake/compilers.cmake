@@ -1,16 +1,10 @@
 include(CheckIncludeFile)
 include(CheckSymbolExists)
 
-if(CMAKE_C_COMPILER_ID STREQUAL GNU)
-  add_compile_options($<$<COMPILE_LANGUAGE:C>:-Werror=implicit-function-declaration>)
-elseif(CMAKE_C_COMPILER_ID MATCHES "(Clang|Intel)")
-  add_compile_options($<$<COMPILE_LANGUAGE:C>:-Werror=implicit-function-declaration>)
-endif()
-
 add_compile_options(
-"$<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wall;-Wextra>"
+"$<$<COMPILE_LANG_AND_ID:C,Clang,GNU,IntelLLVM>:-Wall;-Wextra;-Werror=implicit-function-declaration>"
 "$<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-Wall;-Wextra;-fimplicit-none>"
-"$<$<COMPILE_LANG_AND_ID:Fortran,Intel,IntelLLVM>:-warn>"
+"$<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:-warn>"
 )
 
 check_include_file(unistd.h HAVE_UNISTD_H)

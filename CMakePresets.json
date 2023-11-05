@@ -10,10 +10,6 @@
   }
 },
 {
-  "name": "ninja", "inherits": "default",
-  "generator": "Ninja"
-},
-{
   "name": "multi", "inherits": "default",
   "displayName": "Ninja Multi-Config",
   "generator": "Ninja Multi-Config"

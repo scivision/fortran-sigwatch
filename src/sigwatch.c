@@ -25,6 +25,8 @@
 #include <signal.h>
 #endif
 
+#include "sigwatch.h"
+
 static int lastsignal;
 // consider SIGRTMAX for future
 #if defined(HAVE_NSIG)
@@ -37,23 +39,15 @@ static int lastsignal;
 
 static int signalresponses[NSIGS] = { -1 }; /* not-initialised flag */
 
-
-int watchsignal    (int *signum);
-int watchsignalname(char *signame, int *response);
-int getlastsignal  (void);
-
 static void detectsignal(int signum);
 static void initresponses(void);
-
-typedef void (*sighandler_t)(int);
 
 /*
  * Watch for the given signal.
  */
-int watchsignal(int *signump)
+int watchsignal(int signum)
 {
     sighandler_t previous;
-    int signum = *signump;
     int rval;
 
     initresponses();
@@ -82,7 +76,7 @@ int watchsignal(int *signump)
  * The set of `named' signals is HUP, INT, USR1 and USR2.  For other
  * signals, use the numeric function, watchsignal().
  */
-int watchsignalname(char *signame, int *response)
+int watchsignalname(char *signame, int response)
 {
     int signum;
     sighandler_t previous;
@@ -110,8 +104,8 @@ int watchsignalname(char *signame, int *response)
             rval = -1;
         else {
             if (signum < NSIGS) {
-                if (response != 0 && *response > 0)
-                    signalresponses[signum] = *response;
+                if (response != 0 && response > 0)
+                    signalresponses[signum] = response;
                 else
                     signalresponses[signum] = signum;
             }

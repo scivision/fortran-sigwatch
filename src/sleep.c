@@ -1,5 +1,3 @@
-extern void c_sleep(int);
-
 #ifdef _MSC_VER
 
 #include <windows.h>
@@ -18,17 +16,22 @@ void c_sleep(int milliseconds){
 // https://linux.die.net/man/3/usleep
 void c_sleep(int milliseconds)
 {
-  int ierr = usleep(milliseconds);
+  if (milliseconds <= 0) {
+    fprintf(stderr, "sleep: milliseconds must be strictly positive %d\n", milliseconds);
+    exit(EINVAL);
+  }
+
+  int ierr = usleep(milliseconds * 1000);
   if (ierr != 0){
     if (errno == EINTR){
       // printf("usleep interrupted\n");
     }
     else if(errno == EINVAL){
-      fprintf(stderr, "usleep bad milliseconds value\n");
+      fprintf(stderr, "ERROR: usleep bad milliseconds value\n");
       exit(1);
     }
     else{
-      fprintf(stderr, "usleep error\n");
+      fprintf(stderr, "ERROR: usleep error\n");
       exit(1);
     }
   }

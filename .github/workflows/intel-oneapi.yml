@@ -2,10 +2,7 @@ name: intel-oneapi
 
 
 env:
-  CTEST_PARALLEL_LEVEL: 2
-  CC: icx
-  CXX: icpx
-  FC: ifx
+  CTEST_NO_TESTS_ACTION: error
 
 on:
   push:
@@ -25,7 +22,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Intel Apt repository
       timeout-minutes: 1

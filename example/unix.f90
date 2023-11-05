@@ -11,11 +11,11 @@ interface
 integer(C_INT) function watchsignalname(signame, response) bind(C)
 import C_INT, C_CHAR
 character(kind=c_char), intent(in) :: signame(*)
-integer(C_INT), intent(in) :: response
+integer(C_INT), intent(in), value :: response
 end function
-integer(C_INT) function watchsignal(signump) bind(C)
+integer(C_INT) function watchsignal(signum) bind(C)
 import C_INT
-integer(C_INT), intent(in) :: signump
+integer(C_INT), intent(in), value:: signum
 end function
 
 integer(C_INT) function getlastsignal() bind(C)
@@ -24,7 +24,7 @@ end function
 
 subroutine milli_sleep(millseconds) bind(C, name="c_sleep")
 import C_INT
-integer(C_INT), intent(in) :: millseconds
+integer(C_INT), intent(in), value :: millseconds
 end subroutine
 
 end interface
@@ -41,10 +41,10 @@ status = watchsignalname("HUP", 99)
 print '("watchsignal HUP:",i2)', status
 
 do i=1,10
-  call sleep(500)
+  call milli_sleep(500)
   print '("lastsig=", i2)', getlastsignal()
 enddo
 
-print *, "Fortran: stopped watching for signals"
+print '(a)', "Fortran: stopped watching for signals"
 
 end program
