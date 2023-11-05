@@ -42,5 +42,8 @@ jobs:
         source /opt/intel/oneapi/setvars.sh
         printenv >> $GITHUB_ENV
 
-    - name: Configure
-      run: cmake --workflow --preset default
+    - run: cmake --preset default
+
+    - run: cmake --build --preset default
+
+    - run: ctest --preset default -LE python

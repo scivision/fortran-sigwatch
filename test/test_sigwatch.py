@@ -26,21 +26,21 @@ proc = subprocess.Popen(
 time.sleep(args.sleep)
 
 if os.name == "nt":
-    print("Python: send SIGBREAK")
     try:
-        proc.send_signal(signal.SIGBREAK)
+        print("Python: send SIGBREAK", signal.SIGBREAK)  # type: ignore
+        proc.send_signal(signal.SIGBREAK)  # type: ignore
     except ValueError as e:
         print(f"Python failed: {e}")
 else:
-    print("Python: send SIGINT")
+    print("Python: send SIGINT", signal.SIGINT)
     proc.send_signal(signal.SIGINT)
     time.sleep(args.sleep)
 
-    print("Python: send SIGUSR1")
+    print("Python: send SIGUSR1", signal.SIGUSR1)  # type: ignore
     proc.send_signal(signal.SIGUSR1)  # type: ignore
 time.sleep(args.sleep)
 
-print("Python: send SIGTERM")
+print("Python: send SIGTERM", signal.SIGTERM)
 proc.send_signal(signal.SIGTERM)
 time.sleep(args.sleep)
 

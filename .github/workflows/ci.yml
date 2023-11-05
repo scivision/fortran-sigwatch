@@ -21,9 +21,14 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      FC: gfortran-12
+
     steps:
     - uses: actions/checkout@v4
 
-    - run: cmake --workflow --preset default
-      env:
-        FC: gfortran-12
+    - run: cmake --preset default
+
+    - run: cmake --build --preset default
+
+    - run: ctest --preset default -LE python
