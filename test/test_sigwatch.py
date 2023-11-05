@@ -32,6 +32,10 @@ if os.name == "nt":
     except ValueError as e:
         print(f"Python failed: {e}")
 else:
+    print("Python: send SIGHUP", signal.SIGHUP)
+    proc.send_signal(signal.SIGHUP)
+    time.sleep(args.sleep)
+
     print("Python: send SIGINT", signal.SIGINT)
     proc.send_signal(signal.SIGINT)
     time.sleep(args.sleep)
