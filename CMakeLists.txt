@@ -57,7 +57,7 @@ if(Python_Interpreter_FOUND)
     TIMEOUT 10
     PASS_REGULAR_EXPRESSION "lastsig=99"
     LABELS "python"
-    DISABLED false
+    DISABLED $<BOOL:${WIN32}>
   )
 endif()
 
