@@ -1,5 +1,6 @@
 #ifdef _MSC_VER
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 // https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
@@ -28,7 +29,7 @@ void c_sleep(int milliseconds)
     }
     else if(errno == EINVAL){
       fprintf(stderr, "ERROR: usleep bad milliseconds value\n");
-      exit(1);
+      exit(EINVAL);
     }
     else{
       fprintf(stderr, "ERROR: usleep error\n");
