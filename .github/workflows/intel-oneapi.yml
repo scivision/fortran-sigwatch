@@ -3,6 +3,8 @@ name: intel-oneapi
 
 env:
   CTEST_NO_TESTS_ACTION: error
+  CC: icx
+  FC: ifx
 
 on:
   push:
@@ -35,7 +37,7 @@ jobs:
 
     - name: Install Intel oneAPI
       timeout-minutes: 5
-      run: sudo apt-get install intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic ninja-build
+      run: sudo apt-get install intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp
 
     - name: Setup Intel oneAPI environment
       run: |
